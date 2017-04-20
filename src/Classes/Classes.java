@@ -19,17 +19,17 @@ import javax.persistence.*;
  */
 @Entity
 public class Classes implements Serializable {
+        
+    @Id
+    @GeneratedValue
+    private int id_classe;
     
     @Column(length=20)
     private String nom;
     
     @Column
     private int nb_eleves;
-    
-    @Id
-    @GeneratedValue
-    private int id_classe;
-    
+
     @OneToMany
     private List<Seances> seances;
 

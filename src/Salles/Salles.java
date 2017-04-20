@@ -19,16 +19,16 @@ import javax.persistence.*;
 @Entity
 public class Salles implements Serializable {
     
+    @Id
+    @GeneratedValue
+    private int id_salle;
+    
     @Column(length=20)
     private String nom_salle;
     
     @Column
     private int nb_places;
-    
-    @Id
-    @GeneratedValue
-    private int id_salle;
-    
+
     @OneToMany
     List<Seances> seances;
 

@@ -5,10 +5,13 @@
  */
 package Utilisateurs;
 
+import javax.persistence.Entity;
+
 /**
  *
  * @author Raphaël
  */
+@Entity
 public class Administrateur extends Utilisateur{
 
     public Administrateur(String nom, String prenom, String login, String mdp, int id) {

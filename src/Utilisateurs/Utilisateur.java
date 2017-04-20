@@ -15,19 +15,13 @@ import javax.persistence.*;
 @Entity
 public abstract class Utilisateur implements Serializable {
     
-    @Column(length=20)
-    private String nom, prenom, login, mdp;
-    
-    
     @Id
     @GeneratedValue
     private int id_user;
+        
+    @Column(length=20)
+    private String nom, prenom, login, mdp;
     
-    public enum typePersonne{
-        Administrateur,
-        Professeur;
-    }
-
     public Utilisateur(String nom, String prenom, String login, String mdp, int id) {
         super();
         this.nom = nom;
