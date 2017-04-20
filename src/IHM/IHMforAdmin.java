@@ -5,6 +5,8 @@
  */
 package IHM;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author jean-luc
@@ -63,7 +65,7 @@ public class IHMforAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jPanel1.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.selectionBackground"));
+        jPanel1.setBackground(new java.awt.Color(157, 217, 244));
 
         jButton1.setText("Modifier");
 
@@ -95,7 +97,7 @@ public class IHMforAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Planning", jPanel1);
 
-        jPanel2.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.selectionBackground"));
+        jPanel2.setBackground(new java.awt.Color(163, 224, 255));
 
         jLabel1.setText("Ajouter");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -234,17 +236,18 @@ public class IHMforAdmin extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel1)
+                        .addGap(223, 223, 223)
+                        .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addComponent(jLabel1)
-                .addGap(223, 223, 223)
-                .addComponent(jLabel2)
-                .addGap(161, 161, 161))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +325,8 @@ public class IHMforAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new IHMforAdmin().setVisible(true);
+               JFrame frame = new IHMforAdmin();
+               frame.setVisible(true);
             }
         });
     }
