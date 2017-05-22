@@ -6,6 +6,7 @@
 package IHM;
 
 import Utilisateurs.Administrateur;
+import Utilisateurs.Professeur;
 import Utilisateurs.Utilisateur;
 import hibernate.HibernateUtil;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Authentification extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        AuthentPanel = new javax.swing.JPanel();
         authent_label = new javax.swing.JLabel();
         login_label = new javax.swing.JLabel();
         password_field = new javax.swing.JPasswordField();
@@ -50,8 +51,8 @@ public class Authentification extends javax.swing.JFrame {
         setName("Form"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(94, 206, 255));
-        jPanel1.setName("jPanel1"); // NOI18N
+        AuthentPanel.setBackground(new java.awt.Color(94, 206, 255));
+        AuthentPanel.setName("AuthentPanel"); // NOI18N
 
         authent_label.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         authent_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -79,11 +80,6 @@ public class Authentification extends javax.swing.JFrame {
                 btn_connecterMouseClicked(evt);
             }
         });
-        btn_connecter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_connecterActionPerformed(evt);
-            }
-        });
 
         login_text.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         login_text.setBorder(null);
@@ -96,29 +92,29 @@ public class Authentification extends javax.swing.JFrame {
         error_label.setText("Login ou mot de passe incorrect ! Veuillez ressayer.");
         error_label.setName("error_label"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout AuthentPanelLayout = new javax.swing.GroupLayout(AuthentPanel);
+        AuthentPanel.setLayout(AuthentPanelLayout);
+        AuthentPanelLayout.setHorizontalGroup(
+            AuthentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(authent_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(label_mdp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(login_label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AuthentPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(AuthentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AuthentPanelLayout.createSequentialGroup()
+                        .addGroup(AuthentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(password_field)
                             .addComponent(btn_connecter, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
                         .addGap(212, 212, 212))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AuthentPanelLayout.createSequentialGroup()
                         .addComponent(login_text, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(209, 209, 209))))
             .addComponent(error_label, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        AuthentPanelLayout.setVerticalGroup(
+            AuthentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AuthentPanelLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(authent_label, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -143,20 +139,16 @@ public class Authentification extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(AuthentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(AuthentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_connecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_connecterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_connecterActionPerformed
 
     private void btn_connecterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_connecterMouseClicked
         // TODO add your handling code here:
@@ -166,42 +158,44 @@ public class Authentification extends javax.swing.JFrame {
         boolean admin, prof = false;
         admin = checkIfUserIsAdmin(s);
         prof = checkIfUserIsProf(s);
-        if(admin){
+        if (admin) {
             new IHMforAdmin().setVisible(true);
-        }
-        else if(prof){
+            this.dispose();
+        } else if (prof) {
             new IHMforClient().setVisible(true);
-        }
-        else{
+            this.dispose();
+        } else {
             error_label.setVisible(true);
-        } 
+        }
         s.flush();
         s.close();
     }//GEN-LAST:event_btn_connecterMouseClicked
 
-    public boolean checkIfUserIsAdmin(Session s){
+    public boolean checkIfUserIsAdmin(Session s) {
         Query q = s.createQuery("Select admin from Administrateur admin");
         boolean flag = false;
         List<Utilisateur> l1 = q.list();
-        for(Utilisateur emp:l1){
-            if((emp.getLogin().equals(login_text.getText())) && (emp.getMdp().equals(password_field.getText()))){
+        for (Utilisateur emp : l1) {
+            if ((emp.getLogin().equals(login_text.getText())) && (emp.getMdp().equals(password_field.getText()))) {
                 flag = true;
             }
         }
         return flag;
     }
-    
-    public boolean checkIfUserIsProf(Session s){
-         Query q = s.createQuery("Select prof from Professeur prof");
+
+    public boolean checkIfUserIsProf(Session s) {
+        Query q = s.createQuery("Select prof from Professeur prof");
         boolean flag = false;
         List<Utilisateur> l1 = q.list();
-        for(Utilisateur emp:l1){
-            if((emp.getLogin().equals(login_text.getText())) && (emp.getMdp().equals(password_field.getText()))){
+        for (Utilisateur emp : l1) {
+            if ((emp.getLogin().equals(login_text.getText())) && (emp.getMdp().equals(password_field.getText()))) {
                 flag = true;
             }
         }
-        return flag;     
+        System.out.println(flag);
+        return flag;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -242,6 +236,12 @@ public class Authentification extends javax.swing.JFrame {
                 emp.setNom("Henin");
                 emp.setPrenom("Raphaël");
                 session.save(emp);
+                Utilisateur prof = new Professeur();
+                prof.setLogin("agarcia");
+                prof.setMdp("test");
+                prof.setNom("Garcia");
+                prof.setPrenom("Alexandre");
+                session.save(prof);
                 session.flush();
                 tx.commit();
                 session.close();
@@ -250,10 +250,10 @@ public class Authentification extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel AuthentPanel;
     private javax.swing.JLabel authent_label;
     private javax.swing.JButton btn_connecter;
     private javax.swing.JLabel error_label;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_mdp;
     private javax.swing.JLabel login_label;
     private javax.swing.JTextField login_text;

@@ -5,7 +5,16 @@
  */
 package IHM;
 
+import Utilisateurs.Administrateur;
+import Utilisateurs.Professeur;
+import Utilisateurs.Utilisateur;
+import hibernate.HibernateUtil;
+import java.util.List;
 import javax.swing.JFrame;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -18,6 +27,12 @@ public class IHMforAdmin extends javax.swing.JFrame {
      */
     public IHMforAdmin() {
         initComponents();
+        errorMessageAdd.setVisible(false);
+        successMessageAdd.setVisible(false);
+        errorMessageList.setVisible(false);
+        errorSearch.setVisible(false);
+        erreurDelete.setVisible(false);
+
     }
 
     /**
@@ -34,28 +49,36 @@ public class IHMforAdmin extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jProgressBar1 = new javax.swing.JProgressBar();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        PlanningPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
-        list1 = new java.awt.List();
+        GestionComptePanel = new javax.swing.JPanel();
+        AddUserLabel = new javax.swing.JLabel();
+        deleteUserLabel = new javax.swing.JLabel();
+        addUserForm = new javax.swing.JPanel();
+        nameText = new javax.swing.JTextField();
+        loginLabel = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        loginText = new javax.swing.JTextField();
+        prenomLabel = new javax.swing.JLabel();
+        prenomText = new javax.swing.JTextField();
+        mdpLabel = new javax.swing.JLabel();
+        pwdText = new javax.swing.JTextField();
+        validerCreateUserBtn = new javax.swing.JButton();
+        choixTypeUser = new javax.swing.JScrollPane();
+        typeList = new javax.swing.JList();
+        errorMessageList = new javax.swing.JLabel();
+        deleteUserForm = new javax.swing.JPanel();
+        nameLabelForSearch = new javax.swing.JLabel();
+        deleteButton = new javax.swing.JButton();
+        textForSearch = new javax.swing.JTextField();
+        listDeleteUser = new java.awt.List();
+        btnSearch = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        errorMessageAdd = new javax.swing.JLabel();
+        successMessageAdd = new javax.swing.JLabel();
+        errorSearch = new javax.swing.JLabel();
+        erreurDelete = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
 
@@ -69,223 +92,278 @@ public class IHMforAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.setBackground(new java.awt.Color(163, 224, 255));
 
-        jPanel1.setBackground(new java.awt.Color(157, 217, 244));
+        PlanningPanel.setBackground(new java.awt.Color(157, 217, 244));
 
         jButton1.setText("Modifier");
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IHM/planing.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout PlanningPanelLayout = new javax.swing.GroupLayout(PlanningPanel);
+        PlanningPanel.setLayout(PlanningPanelLayout);
+        PlanningPanelLayout.setHorizontalGroup(
+            PlanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlanningPanelLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(66, 66, 66))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        PlanningPanelLayout.setVerticalGroup(
+            PlanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PlanningPanelLayout.createSequentialGroup()
+                .addGroup(PlanningPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PlanningPanelLayout.createSequentialGroup()
                         .addGap(236, 236, 236)
                         .addComponent(jButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(PlanningPanelLayout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(jLabel8)))
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Planning", jPanel1);
+        jTabbedPane1.addTab("Planning", PlanningPanel);
 
-        jPanel2.setBackground(new java.awt.Color(163, 224, 255));
+        GestionComptePanel.setBackground(new java.awt.Color(163, 224, 255));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Ajouter");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        AddUserLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        AddUserLabel.setText("Ajouter");
+        AddUserLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Supprimer");
+        deleteUserLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        deleteUserLabel.setText("Supprimer");
 
-        jPanel3.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.selectionBackground"));
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel3.setPreferredSize(new java.awt.Dimension(214, 280));
+        addUserForm.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.selectionBackground"));
+        addUserForm.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        addUserForm.setMaximumSize(new java.awt.Dimension(241, 353));
+        addUserForm.setMinimumSize(new java.awt.Dimension(241, 353));
+        addUserForm.setPreferredSize(new java.awt.Dimension(241, 353));
 
-        jTextField1.setToolTipText("");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        nameText.setToolTipText("");
+
+        loginLabel.setText("Login");
+
+        nameLabel.setText("Nom");
+
+        loginText.setToolTipText("");
+
+        prenomLabel.setText("Prenom");
+
+        mdpLabel.setText("Mot de passe");
+
+        validerCreateUserBtn.setText("Valider");
+        validerCreateUserBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                validerCreateUserBtnMouseClicked(evt);
             }
         });
 
-        jLabel3.setText("Login");
-
-        jLabel4.setText("Nom");
-
-        jTextField2.setToolTipText("");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
+        typeList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Administrateur", "Professeur" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
+        typeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        choixTypeUser.setViewportView(typeList);
 
-        jLabel5.setText("Prenom");
+        errorMessageList.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        errorMessageList.setForeground(new java.awt.Color(255, 51, 0));
+        errorMessageList.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorMessageList.setText("Catégorie utilisateur manquante");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setText("Mot de passe");
-
-        jButton2.setText("Valider");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout addUserFormLayout = new javax.swing.GroupLayout(addUserForm);
+        addUserForm.setLayout(addUserFormLayout);
+        addUserFormLayout.setHorizontalGroup(
+            addUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addUserFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField3)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(0, 126, Short.MAX_VALUE))
-                    .addComponent(jTextField4))
+                .addGroup(addUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nameText, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(loginText)
+                    .addComponent(prenomText)
+                    .addComponent(pwdText)
+                    .addComponent(choixTypeUser, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(addUserFormLayout.createSequentialGroup()
+                        .addGroup(addUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loginLabel)
+                            .addComponent(nameLabel)
+                            .addComponent(prenomLabel)
+                            .addComponent(mdpLabel))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(errorMessageList, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jButton2)
+            .addGroup(addUserFormLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(validerCreateUserBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        addUserFormLayout.setVerticalGroup(
+            addUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addUserFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(loginLabel)
                 .addGap(2, 2, 2)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loginText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(nameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addComponent(prenomLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(prenomText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(mdpLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(pwdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(choixTypeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(errorMessageList)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(validerCreateUserBtn)
                 .addContainerGap())
         );
 
-        jPanel4.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.selectionBackground"));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        deleteUserForm.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.selectionBackground"));
+        deleteUserForm.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel7.setText("Nom");
+        nameLabelForSearch.setText("Nom");
 
-        jButton3.setText("OK");
-
-        jTextField6.setToolTipText("");
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+        deleteButton.setText("Supprimer");
+        deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        textForSearch.setToolTipText("");
+
+        btnSearch.setText("Search");
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSearchMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout deleteUserFormLayout = new javax.swing.GroupLayout(deleteUserForm);
+        deleteUserForm.setLayout(deleteUserFormLayout);
+        deleteUserFormLayout.setHorizontalGroup(
+            deleteUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deleteUserFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                    .addComponent(jTextField6)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(deleteUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(listDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(deleteUserFormLayout.createSequentialGroup()
+                        .addComponent(nameLabelForSearch)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(deleteUserFormLayout.createSequentialGroup()
+                        .addComponent(textForSearch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSearch)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(78, 78, 78))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, deleteUserFormLayout.createSequentialGroup()
+                .addContainerGap(85, Short.MAX_VALUE)
+                .addComponent(deleteButton)
+                .addGap(71, 71, 71))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        deleteUserFormLayout.setVerticalGroup(
+            deleteUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deleteUserFormLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addGap(2, 2, 2)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nameLabelForSearch)
+                .addGap(1, 1, 1)
+                .addGroup(deleteUserFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textForSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(list1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addComponent(listDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(deleteButton)
                 .addContainerGap())
         );
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(122, 122, 122))))
+        errorMessageAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        errorMessageAdd.setForeground(new java.awt.Color(255, 0, 0));
+        errorMessageAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorMessageAdd.setText("Le formulaire n'est pas complet");
+
+        successMessageAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        successMessageAdd.setForeground(new java.awt.Color(51, 204, 0));
+        successMessageAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        successMessageAdd.setText("Utilisateur créé avec succès !");
+
+        errorSearch.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        errorSearch.setForeground(new java.awt.Color(255, 51, 51));
+        errorSearch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorSearch.setText("Veuillez saisir un nom");
+
+        erreurDelete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        erreurDelete.setForeground(new java.awt.Color(255, 0, 0));
+        erreurDelete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        erreurDelete.setText("Veuillez sélectionner un utilisateur");
+
+        javax.swing.GroupLayout GestionComptePanelLayout = new javax.swing.GroupLayout(GestionComptePanel);
+        GestionComptePanel.setLayout(GestionComptePanelLayout);
+        GestionComptePanelLayout.setHorizontalGroup(
+            GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GestionComptePanelLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(errorMessageAdd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                    .addComponent(successMessageAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addUserForm, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(erreurDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                    .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(deleteUserForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(errorSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(55, 55, 55))
+            .addGroup(GestionComptePanelLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(AddUserLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteUserLabel)
+                .addGap(122, 122, 122))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+        GestionComptePanelLayout.setVerticalGroup(
+            GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GestionComptePanelLayout.createSequentialGroup()
+                .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GestionComptePanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(AddUserLabel)
+                            .addComponent(deleteUserLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(GestionComptePanelLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(GestionComptePanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(errorSearch)
+                                .addGap(26, 26, 26)
+                                .addComponent(deleteUserForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GestionComptePanelLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(successMessageAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(addUserForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)))
+                .addGroup(GestionComptePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorMessageAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(erreurDelete))
+                .addGap(56, 56, 56))
         );
 
-        jTabbedPane1.addTab("Gestion de Compte", jPanel2);
+        jTabbedPane1.addTab("Gestion de Compte", GestionComptePanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,21 +380,82 @@ public class IHMforAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void validerCreateUserBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_validerCreateUserBtnMouseClicked
+        if (loginText.getText().equals("") || pwdText.getText().equals("") || nameText.getText().equals("") || prenomText.getText().equals("")) {
+            successMessageAdd.setVisible(false);
+            errorMessageAdd.setVisible(true);
+            errorMessageList.setVisible(false);
+        } else {
+            Object value = typeList.getSelectedValue();
+            if (!(value == null)) {
+                errorMessageList.setVisible(false);
+                errorMessageAdd.setVisible(false);
+                SessionFactory sf = HibernateUtil.getSessionFactory();
+                Session session = sf.openSession();
+                Transaction tx = session.beginTransaction();
+                if (value.equals("Administrateur")) {
+                    Utilisateur admin = new Administrateur();
+                    admin.setLogin(loginText.getText());
+                    admin.setMdp(pwdText.getText());
+                    admin.setNom(nameText.getText());
+                    admin.setPrenom(prenomText.getText());
+                    session.save(admin);
+                } else {
+                    Utilisateur admin = new Professeur();
+                    admin.setLogin(loginText.getText());
+                    admin.setMdp(pwdText.getText());
+                    admin.setNom(nameText.getText());
+                    admin.setPrenom(prenomText.getText());
+                    session.save(admin);
+                }
+                successMessageAdd.setVisible(true);
+                session.flush();
+                tx.commit();
+                session.close();
+            } else {
+                errorMessageList.setVisible(true);
+                errorMessageAdd.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_validerCreateUserBtnMouseClicked
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
+        if (textForSearch.getText().equals("")) {
+            errorSearch.setVisible(true);
+            listDeleteUser.removeAll();
+        } else {
+            listDeleteUser.removeAll();
+            errorSearch.setVisible(false);
+            SessionFactory sf = HibernateUtil.getSessionFactory();
+            Session s = sf.openSession();
+            Transaction tx = s.beginTransaction();
+            Query q = s.createQuery("Select u from Utilisateur u where u.nom = '" + textForSearch.getText() + "'");
+            List<Utilisateur> l1 = q.list();
+            for (Utilisateur user : l1) {
+                listDeleteUser.add(user.getId() + " " + user.getNom() + " " + user.getPrenom());
+            }
+            s.flush();
+            s.close();
+        }
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_btnSearchMouseClicked
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        if (listDeleteUser.getSelectedItem() == null) {
+            erreurDelete.setVisible(true);
+        } else {
+            erreurDelete.setVisible(false);
+            int idToDelete=Integer.parseInt(listDeleteUser.getSelectedItem().substring(0, 1));
+            SessionFactory sf = HibernateUtil.getSessionFactory();
+            Session s = sf.openSession();
+            Transaction tx = s.beginTransaction();
+            Utilisateur emp = (Utilisateur) s.get(Utilisateur.class, idToDelete);
+            s.delete(emp);
+            tx.commit();
+            s.flush();
+            s.close();
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -348,39 +487,47 @@ public class IHMforAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               JFrame frame = new IHMforAdmin();
-               frame.setVisible(true);
+                JFrame frame = new IHMforAdmin();
+                frame.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AddUserLabel;
+    private javax.swing.JPanel GestionComptePanel;
+    private javax.swing.JPanel PlanningPanel;
+    private javax.swing.JPanel addUserForm;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JScrollPane choixTypeUser;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JPanel deleteUserForm;
+    private javax.swing.JLabel deleteUserLabel;
+    private javax.swing.JLabel erreurDelete;
+    private javax.swing.JLabel errorMessageAdd;
+    private javax.swing.JLabel errorMessageList;
+    private javax.swing.JLabel errorSearch;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JToolBar jToolBar1;
-    private java.awt.List list1;
+    private java.awt.List listDeleteUser;
+    private javax.swing.JLabel loginLabel;
+    private javax.swing.JTextField loginText;
+    private javax.swing.JLabel mdpLabel;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel nameLabelForSearch;
+    private javax.swing.JTextField nameText;
+    private javax.swing.JLabel prenomLabel;
+    private javax.swing.JTextField prenomText;
+    private javax.swing.JTextField pwdText;
+    private javax.swing.JLabel successMessageAdd;
+    private javax.swing.JTextField textForSearch;
+    private javax.swing.JList typeList;
+    private javax.swing.JButton validerCreateUserBtn;
     // End of variables declaration//GEN-END:variables
 }
